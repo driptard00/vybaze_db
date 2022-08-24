@@ -1,0 +1,38 @@
+{
+    "premiumPlans": [
+        {
+            "planName": "VyBaze Music Student Plan",
+            "planAmount": 400,
+            "features": [
+                "Over 100m songs",
+                "Ads-free streaming",
+                "Unlimited skips",
+                "Offline listening",
+                "1month free trial"
+            ]
+        },
+        {
+            "planName": "VyBaze Music Individual Plan",
+            "planAmount": 700,
+            "features": [
+                "Over 100m songs",
+                "Ads-free streaming",
+                "Unlimited skips",
+                "Offline listening",
+                "3months free trial"
+            ]
+        },        
+        {
+            "planName": "VyBaze Music Family Plan",
+            "planAmount": 1000,
+            "features": [
+                "Over 100m songs",
+                "Ads-free streaming",
+                "Unlimited skips",
+                "Offline listening",
+                "1month free trial",
+                "Up to 6 premium users"
+            ]
+        }
+    ]
+}
