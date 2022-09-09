@@ -144,8 +144,138 @@ class UserController {
 
     // Single User
     static getSingleUser = async (req, res) => {
-         
+         try {
+             const { id } = req.params;
+
+             const user = await Users.findById({ _id: id });
+             console.log(`ID:::::${user}`);
+             if(!user){
+                return res.status(404).json({
+                    "success": false,
+                    "code": 404,
+                    "message": "No user found." 
+                })
+             }
+             return res.status(200).json({
+                "success": true,
+                "code": 200,
+                "message": "User retrieved successfully" ,
+                "data": user
+            })
+         } catch (error) {
+            console.log(`ERROR:::::${error}`);
+
+            return res.status(500).json({
+                "success": false,
+                "code": 500,
+                "message": "server error please try again" 
+            })
+         }
     }
+
+    //  Update Single User
+    static updateSingleUser = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const requestBody = req.body;
+            console.log(`REQBODY::::::${requestBody}`);
+
+            const { error, value } = JoiValidator.userUpdateSchema.validate(requestBody);
+            if(error){
+                return res.status(400).json({
+                    "success": false,
+                    "code": 400,
+                    "message": `${error.message}` 
+                })
+            }
+
+            const response = await Users.findByIdAndUpdate(
+                {_id: id},
+                {...value}
+            )
+            console.log(`RESPONSE:::::${response}`);
+            if(!response){
+                return res.status(404).json({
+                    "success": false,
+                    "code": 404,
+                    "message": "No user found." 
+                })
+            }
+            return res.status(200).json({
+                "success": false,
+                "code": 200,
+                "message": "User has been successfully updated" ,
+                "data": response
+            })
+
+        } catch (error) {
+            console.log(`ERROR:::::${error}`);
+
+            return res.status(500).json({
+                "success": false,
+                "code": 500,
+                "message": "server error please try again" 
+            })
+        }
+    }
+
+    static deleteSingleUser = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const user = await Users.findByIdAndDelete({ _id: id });
+            if(!user){
+                return res.status(404).json({
+                    "success": false,
+                    "code": 404,
+                    "message": "User not found"
+                })
+            }
+            return res.status(200).json({
+                "success": false,
+                "code": 200,
+                "message": "User has been successfully deleted" ,
+                "data": user
+            })
+        } catch (error) {
+            console.log(`ERROR:::::${error}`);
+
+            return res.status(500).json({
+                "success": false,
+                "code": 500,
+                "message": "server error please try again" 
+            })
+        } 
+    }
+
+    // static deleteSingleUser = async (req, res) => {
+    //     try {
+    //         //  = req.params;
+    //          const { err, value } = await Users.deleteMany(
+    //             {age: {$gte: 40}}
+    //         )
+    //         if(err){
+    //             return res.status(404).json({
+    //                 "success": false,
+    //                 "code": 404,
+    //                 "message": "Delete Unsuccessful"
+    //             })
+    //         }
+    //         return res.status(200).json({
+    //             "success": true,
+    //             "code": 200,
+    //             "message": "User has been successfully deleted" ,
+    //             "data": value
+    //         })
+    //     } catch (error) {
+    //         console.log(`ERROR:::::${error}`);
+
+    //         return res.status(500).json({
+    //             "success": false,
+    //             "code": 500,
+    //             "message": "server error please try again" 
+    //         })
+    //     }
+    // }
 }
 
 module.exports = UserController;
